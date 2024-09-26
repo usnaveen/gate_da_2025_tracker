@@ -88,12 +88,14 @@ function updateSubjectProgress(topicElement) {
 
     const segmentWidth = 100 / totalCheckboxes;
 
-    topicElement.querySelector('.progress-theory').style.width = theoryChecked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector('.progress-practice').style.width = practiceChecked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector('.progress-revision1').style.width = revision1Checked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector('.progress-revision2').style.width = revision2Checked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector('.progress-pyq').style.width = pyqChecked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector('.progress-test').style.width = testChecked ? `${segmentWidth}%` : '0';
+    const topic = topicElement.dataset.topic;
+    
+    topicElement.querySelector(`#progress-${topic}-theory`).style.width = theoryChecked ? `${segmentWidth}%` : '0';
+    topicElement.querySelector(`#progress-${topic}-practice`).style.width = practiceChecked ? `${segmentWidth}%` : '0';
+    topicElement.querySelector(`#progress-${topic}-revision1`).style.width = revision1Checked ? `${segmentWidth}%` : '0';
+    topicElement.querySelector(`#progress-${topic}-revision2`).style.width = revision2Checked ? `${segmentWidth}%` : '0';
+    topicElement.querySelector(`#progress-${topic}-pyq`).style.width = pyqChecked ? `${segmentWidth}%` : '0';
+    topicElement.querySelector(`#progress-${topic}-test`).style.width = testChecked ? `${segmentWidth}%` : '0';
 }
 
 // Add event listener to checkboxes
@@ -103,6 +105,7 @@ document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
         updateSubjectProgress(topicElement);
     });
 });
+
 
 // Calculate overall progress
 function calculateOverallProgress() {
