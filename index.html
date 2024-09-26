@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GATE DA Progress Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Green bar at top and bottom */
+        .top-bar, .bottom-bar {
+            background-color: #4CAF50;
+            height: 50px;
+            width: 100%;
+        }
+
+        h1, h2 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        .logo {
+            display: block;
+            margin: 20px auto;
+            max-width: 100px;
+        }
+
+        .topic {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 10px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+
+        td:first-child {
+            text-align: left;
+        }
+
+        /* Style the checkboxes */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #4CAF50;
+        }
+
+        /* Progress bar styles - fixed size */
+        .progress-bar {
+            width: 80%; /* Fixed width for uniformity */
+            height: 20px;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+            margin: 10px auto; /* Centered horizontally */
+            overflow: hidden;
+        }
+
+        .progress-bar div {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Footer style */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        /* Align the topic header titles */
+        .topic-header {
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ccc;
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Green bar at the top -->
+    <div class="top-bar"></div>
+
+    <!-- GATE logo -->
+
+    <h1>GATE DA 2025  Progress Tracker</h1>
+
+        <!-- Programming, Data Structures and Algorithms -->
+    <div class="topic" data-topic="PDSA">
+        <div class="topic-header">
+            <h2>PDSA</h2>
+        </div>
+        <div class="progress-bar">
+            <div></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Theory</th>
+                    <th>Practice</th>
+                    <th>1st Revision</th>
+                    <th>2nd Revision</th>
+                    <th>PYQ</th>
+                    <th>Practice Test</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Programming in python</td>
+                    <td><input type="checkbox" class="task" id="programming-1-theory"></td>
+                    <td><input type="checkbox" class="task" id="programming-1-practice"></td>
+                    <td><input type="checkbox" class="task" id="programming-1-rev1"></td>
+                    <td><input type="checkbox" class="task" id="programming-1-rev2"></td>
+                    <td><input type="checkbox" class="task" id="programming-1-pyq"></td>
+                    <td><input type="checkbox" class="task" id="programming-1-test"></td>
+                </tr>
+                <tr>
+                    <td>Stacks, Queue, Linked Lists, Hash Tables</td>
+                    <td><input type="checkbox" class="task" id="programming-2-theory"></td>
+                    <td><input type="checkbox" class="task" id="programming-2-practice"></td>
+                    <td><input type="checkbox" class="task" id="programming-2-rev1"></td>
+                    <td><input type="checkbox" class="task" id="programming-2-rev2"></td>
+                    <td><input type="checkbox" class="task" id="programming-2-pyq"></td>
+                    <td><input type="checkbox" class="task" id="programming-2-test"></td>
+                </tr>
+                <tr>
+                    <td>Linear Search, Binary Search</td>
+                    <td><input type="checkbox" class="task" id="programming-3-theory"></td>
+                    <td><input type="checkbox" class="task" id="programming-3-practice"></td>
+                    <td><input type="checkbox" class="task" id="programming-3-rev1"></td>
+                    <td><input type="checkbox" class="task" id="programming-3-rev2"></td>
+                    <td><input type="checkbox" class="task" id="programming-3-pyq"></td>
+                    <td><input type="checkbox" class="task" id="programming-3-test"></td>
+                </tr>
+                <tr>
+                    <td>Selection sort, Bubble sort, Insertion sort</td>
+                    <td><input type="checkbox" class="task" id="programming-4-theory"></td>
+                    <td><input type="checkbox" class="task" id="programming-4-practice"></td>
+                    <td><input type="checkbox" class="task" id="programming-4-rev1"></td>
+                    <td><input type="checkbox" class="task" id="programming-4-rev2"></td>
+                    <td><input type="checkbox" class="task" id="programming-4-pyq"></td>
+                    <td><input type="checkbox" class="task" id="programming-4-test"></td>
+                </tr>
+                <tr>
+                    <td>Divide and Conquer: Merge sort, Quick sort</td>
+                    <td><input type="checkbox" class="task" id="programming-5-theory"></td>
+                    <td><input type="checkbox" class="task" id="programming-5-practice"></td>
+                    <td><input type="checkbox" class="task" id="programming-5-rev1"></td>
+                    <td><input type="checkbox" class="task" id="programming-5-rev2"></td>
+                    <td><input type="checkbox" class="task" id="programming-5-pyq"></td>
+                    <td><input type="checkbox" class="task" id="programming-5-test"></td>
+                </tr>
+                <tr>
+                    <td>Graph theory</td>
+                    <td><input type="checkbox" class="task" id="programming76theory"></td>
+                    <td><input type="checkbox" class="task" id="programming-6-practice"></td>
+                    <td><input type="checkbox" class="task" id="programming-6-rev1"></td>
+                    <td><input type="checkbox" class="task" id="programming-6-rev2"></td>
+                    <td><input type="checkbox" class="task" id="programming-6-pyq"></td>
+                    <td><input type="checkbox" class="task" id="programming-6-test"></td>
+                </tr>
+                <tr>
+                    <td>Graph Algorithms</td>
+                    <td><input type="checkbox" class="task" id="programming-7-theory"></td>
+                    <td><input type="checkbox" class="task" id="programming-7-practice"></td>
+                    <td><input type="checkbox" class="task" id="programming-7-rev1"></td>
+                    <td><input type="checkbox" class="task" id="programming-7-rev2"></td>
+                    <td><input type="checkbox" class="task" id="programming-7-pyq"></td>
+                    <td><input type="checkbox" class="task" id="programming-7-test"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Linear Algebra -->
+    <div class="topic" data-topic="linear-algebra">
+        <div class="topic-header">
+            <h2>Linear Algebra</h2>
+        </div>
+        <div class="progress-bar">
+            <div></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Theory</th>
+                    <th>Practice</th>
+                    <th>1st Revision</th>
+                    <th>2nd Revision</th>
+                    <th>PYQ</th>
+                    <th>Practice Test</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Vector Space and Subspaces</td>
+                    <td><input type="checkbox" class="task" id="linear-algebra-1-theory"></td>
+                    <td><input type="checkbox" class="task" id="linear-algebra-1-practice"></td>
+                    <td><input type="checkbox" class="task" id="linear-algebra-1-rev1"></td>
+                    <td><input type="checkbox" class="task" id="linear-algebra-1-rev2"></td>
+                    <td><input type="checkbox" class="task" id="linear-algebra-1-pyq"></td>
+                    <td><input type="checkbox" class="task" id="linear-algebra-1-test"></td>
+                </tr>
+                <!-- Add all remaining Linear Algebra topics here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Calculus and Optimization -->
+    <div class="topic" data-topic="calculus-optimization">
+        <div class="topic-header">
+            <h2>Calculus and Optimization</h2>
+        </div>
+        <div class="progress-bar">
+            <div></div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Theory</th>
+                    <th>Practice</th>
+                    <th>1st Revision</th>
+                    <th>2nd Revision</th>
+                    <th>PYQ</th>
+                    <th>Practice Test</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Functions of a Single Variable</td>
+                    <td><input type="checkbox" class="task" id="calculus-1-theory"></td>
+                    <td><input type="checkbox" class="task" id="calculus-1-practice"></td>
+                    <td><input type="checkbox" class="task" id="calculus-1-rev1"></td>
+                    <td><input type="checkbox" class="task" id="calculus-1-rev2"></td>
+                    <td><input type="checkbox" class="task" id="calculus-1-pyq"></td>
+                    <td><input type="checkbox" class="task" id="calculus-1-test"></td>
+                </tr>
+                <!-- Add all remaining Calculus and Optimization topics here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Created by <a href="#">usnaveen</a></p>
+    </div>
+
+    <!-- Green bar at the bottom -->
+    <div class="bottom-bar"></div>
+
+    <script>
+        // Save checkbox state to localStorage
+        function saveCheckboxState() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach((checkbox) => {
+                localStorage.setItem(checkbox.id, checkbox.checked);
+            });
+        }
+
+        // Load checkbox state from localStorage
+        function loadCheckboxState() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach((checkbox) => {
+                const checked = localStorage.getItem(checkbox.id) === 'true';
+                checkbox.checked = checked;
+            });
+        }
+
+        // Update progress bar based on checkboxes
+        function updateProgress(topicElement) {
+            const checkboxes = topicElement.querySelectorAll('input[type="checkbox"]');
+            const progressBar = topicElement.querySelector('.progress-bar div');
+            const total = checkboxes.length;
+            const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+            const progressPercentage = (checked / total) * 100;
+            progressBar.style.width = progressPercentage + '%';
+        }
+
+        // Initialize progress and checkbox states on page load
+        function initialize() {
+            loadCheckboxState();
+            document.querySelectorAll('.topic').forEach(topic => {
+                const checkboxes = topic.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
+                        saveCheckboxState();
+                        updateProgress(topic);
+                    });
+                });
+                updateProgress(topic);  // Initialize progress on page load
+            });
+        }
+
+        // Call initialize function when page loads
+        window.onload = initialize;
+    </script>
+
+</body>
+</html>
