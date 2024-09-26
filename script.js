@@ -3,8 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/fireba
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
-// Your Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAowbD3T4k0PKfM3TqzZG-GYuSU-WLv18s",
   authDomain: "gatedatracker.firebaseapp.com",
@@ -21,21 +20,7 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// Listen to auth state changes
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        document.getElementById("user-info").innerText = `Hello, ${user.displayName}`;
-        document.getElementById("sign-in-button").style.display = "none";
-        document.getElementById("sign-out-button").style.display = "block";
-        loadCheckboxState(user.uid);
-    } else {
-        document.getElementById("user-info").innerText = "Please sign in";
-        document.getElementById("sign-in-button").style.display = "block";
-        document.getElementById("sign-out-button").style.display = "none";
-    }
-});
-
-// Save checkbox state to Firestore
+// Function to save checkbox state to Firestore
 async function saveCheckboxState(userId) {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     const state = {};
@@ -52,7 +37,7 @@ async function saveCheckboxState(userId) {
     }
 }
 
-// Load checkbox state from Firestore
+// Function to load checkbox state from Firestore
 async function loadCheckboxState(userId) {
     try {
         const docSnap = await getDoc(doc(db, "progress", userId));
@@ -63,10 +48,10 @@ async function loadCheckboxState(userId) {
                 checkbox.checked = state[checkbox.id] || false;
             });
 
+            // Update the subject and overall progress
             document.querySelectorAll('.topic').forEach(topic => {
                 updateSubjectProgress(topic);
             });
-
             calculateOverallProgress();
         } else {
             console.log("No saved progress found.");
@@ -76,38 +61,17 @@ async function loadCheckboxState(userId) {
     }
 }
 
-// Update progress bar based on checkboxes
+// Function to update the subject-specific progress bars
 function updateSubjectProgress(topicElement) {
-    const totalCheckboxes = 6;
-    const theoryChecked = topicElement.querySelector('input[id*="theory"]').checked;
-    const practiceChecked = topicElement.querySelector('input[id*="practice"]').checked;
-    const revision1Checked = topicElement.querySelector('input[id*="rev1"]').checked;
-    const revision2Checked = topicElement.querySelector('input[id*="rev2"]').checked;
-    const pyqChecked = topicElement.querySelector('input[id*="pyq"]').checked;
-    const testChecked = topicElement.querySelector('input[id*="test"]').checked;
-
-    const segmentWidth = 100 / totalCheckboxes;
-
-    const topic = topicElement.dataset.topic;
-    
-    topicElement.querySelector(`#progress-${topic}-theory`).style.width = theoryChecked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector(`#progress-${topic}-practice`).style.width = practiceChecked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector(`#progress-${topic}-revision1`).style.width = revision1Checked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector(`#progress-${topic}-revision2`).style.width = revision2Checked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector(`#progress-${topic}-pyq`).style.width = pyqChecked ? `${segmentWidth}%` : '0';
-    topicElement.querySelector(`#progress-${topic}-test`).style.width = testChecked ? `${segmentWidth}%` : '0';
+    const checkboxes = topicElement.querySelectorAll('input[type="checkbox"]');
+    const progressBar = topicElement.querySelector('.progress-bar div');
+    const total = checkboxes.length;
+    const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+    const progressPercentage = (checked / total) * 100;
+    progressBar.style.width = progressPercentage + '%';
 }
 
-// Add event listener to checkboxes
-document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-        const topicElement = this.closest('.topic');
-        updateSubjectProgress(topicElement);
-    });
-});
-
-
-// Calculate overall progress
+// Function to calculate and display the overall progress
 function calculateOverallProgress() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     const totalCheckboxes = checkboxes.length;
@@ -120,6 +84,21 @@ function calculateOverallProgress() {
     const progressPercentageText = document.getElementById('overall-progress-percentage');
     progressPercentageText.innerText = Math.round(overallProgressPercentage) + '%';
 }
+
+// Attach event listeners to the checkboxes
+document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+        const topicElement = this.closest('.topic');
+        updateSubjectProgress(topicElement);
+        calculateOverallProgress();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                saveCheckboxState(user.uid);
+            }
+        });
+    });
+});
 
 // Google Sign-In function
 function googleSignIn() {
@@ -134,7 +113,7 @@ function googleSignIn() {
         });
 }
 
-// Sign Out function
+// Google Sign-Out function
 function googleSignOut() {
     signOut(auth).then(() => {
         console.log("User signed out.");
@@ -144,8 +123,8 @@ function googleSignOut() {
     });
 }
 
-// Initialize overall progress tracking on page load
-window.onload = function() {
+// Initialize the app on page load
+window.onload = function () {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             loadCheckboxState(user.uid);
