@@ -118,11 +118,13 @@
     <h1>GATE DA 2025 Progress Tracker</h1>
 
       <!-- Google Sign-In/Sign-Out buttons and User Info -->
+    <!-- Google Sign-In/Sign-Out buttons and User Info -->
     <div style="text-align: center; margin-top: 20px;">
         <div id="user-info" style="font-size: 18px;">Please sign in</div>
-        <button id="sign-in-button" onclick="googleSignIn()" style="margin: 10px; padding: 10px 20px; font-size: 16px;">Sign in with Google</button>
-        <button id="sign-out-button" onclick="googleSignOut()" style="display: none; margin: 10px; padding: 10px 20px; font-size: 16px;">Sign Out</button>
+        <button id="sign-in-button" style="margin: 10px; padding: 10px 20px; font-size: 16px;">Sign in with Google</button>
+        <button id="sign-out-button" style="display: none; margin: 10px; padding: 10px 20px; font-size: 16px;">Sign Out</button>
     </div>
+
 
     <!-- Programming, Data Structures and Algorithms -->
     <div class="topic" data-topic="PDSA">
@@ -361,6 +363,33 @@
 
         // Call initialize function when page loads
         window.onload = initialize;
+
+        // Attach event listeners to buttons once the DOM is loaded
+        document.getElementById("sign-in-button").addEventListener("click", googleSignIn);
+        document.getElementById("sign-out-button").addEventListener("click", googleSignOut);
+        
+        // Google Sign-In function
+        function googleSignIn() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("User signed in: ", user.displayName);
+                    loadCheckboxState(user.uid); // Load user-specific data
+                })
+                .catch((error) => {
+                    console.error("Error during sign-in: ", error);
+                });
+        }
+        
+        // Sign Out function
+        function googleSignOut() {
+            signOut(auth).then(() => {
+                console.log("User signed out.");
+                location.reload(); // Reload the page after sign-out
+            }).catch((error) => {
+                console.error("Error during sign-out: ", error);
+            });
+        }
     </script>
 
 </body>
