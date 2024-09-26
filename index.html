@@ -98,6 +98,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+
         table {
             width: 100%;
             margin-bottom: 10px;
@@ -167,6 +168,11 @@
             text-align: center;
             background-color: #fff;
         }
+
+        .overall-progress h3 {
+            color: #333; /* Or any contrasting color */
+        }
+
         
         .progress-bar {
             width: 80%; /* Fixed width for uniformity */
@@ -186,8 +192,9 @@
         
         #overall-progress-percentage {
             font-size: 16px;
-            color: #86F986;
+            color: #4CAF50; /* Same green color used in progress bars */
         }
+
 
     </style>
 </head>
@@ -205,13 +212,16 @@
     </div>
 
     <!-- Overall Progress Tracker -->
-    <div class="overall-progress">
-        <h3>Overall Progress</h3>
+    <div class="topic" data-topic="OverallProgress">
+        <div class="topic-header">
+            <h2>Overall Progress</h2>
+        </div>
         <div class="progress-bar">
             <div id="overall-progress-bar"></div>
         </div>
         <p id="overall-progress-percentage">0%</p>
     </div>
+
 
 
 
