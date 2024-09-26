@@ -4,7 +4,206 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GATE DA Progress Tracker with Firebase</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Green bar at top and bottom */
+        .top-bar, .bottom-bar {
+            background-color: #4CAF50;
+            height: 10px;
+            width: 100%;
+        }
+
+        /* Header styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            margin-bottom: 20px; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        #user-info {
+            font-size: 18px;
+            margin-right: 15px;
+            color: #fff;
+        }
+
+        /* Profile image styling */
+        #profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 15px;
+        }
+
+        /* Modern button styling */
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+
+        .btn-secondary {
+            background-color: #f44336;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e53935;
+        }
+
+        /* Page content styling */
+        h2 {
+            color: #4CAF50;
+            text-align: left;
+        }
+
+        .topic {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        table {
+            width: 100%;
+            margin-bottom: 10px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+
+        td:first-child {
+            text-align: left;
+        }
+
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #4CAF50;
+        }
+
+        /* Progress bar styling */
+        .progress-bar {
+            width: 80%;
+            height: 20px;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+            margin: 10px auto;
+            overflow: hidden;
+        }
+
+        .progress-bar div {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Footer styling */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        /* Overall Progress Tracker */
+        .overall-progress {
+            margin: 20px 0;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .overall-progress h1 {
+            color: #fff; 
+        }
+
+        .overall-progress h2 {
+            color: #fff; 
+        }
+
+        
+        .progress-bar {
+            width: 80%; /* Fixed width for uniformity */
+            height: 20px;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+            margin: 10px auto; /* Centered horizontally */
+            overflow: hidden;
+        }
+        
+        .progress-bar div {
+            height: 100%;
+            background-color: #2DACFF;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        #overall-progress-percentage {
+            font-size: 16px;
+            text-align: center;
+            color: #4CAF50; /* Same green color used in progress bars */
+        }
+
+
+    </style>
 </head>
 <body>
 
@@ -30,18 +229,16 @@
         <p id="overall-progress-percentage">0%</p>
     </div>
 
+
+
+
     <!-- Programming, Data Structures and Algorithms -->
     <div class="topic" data-topic="PDSA">
         <div class="topic-header">
             <h2>PDSA</h2>
         </div>
         <div class="progress-bar">
-            <div id="progress-theory" class="progress-segment"></div>
-            <div id="progress-practice" class="progress-segment"></div>
-            <div id="progress-revision1" class="progress-segment"></div>
-            <div id="progress-revision2" class="progress-segment"></div>
-            <div id="progress-pyq" class="progress-segment"></div>
-            <div id="progress-test" class="progress-segment"></div>
+            <div></div>
         </div>
         <table>
             <thead>
@@ -129,12 +326,7 @@
             <h2>Probability and Statistics</h2>
         </div>
         <div class="progress-bar">
-            <div id="progress-theory" class="progress-segment"></div>
-            <div id="progress-practice" class="progress-segment"></div>
-            <div id="progress-revision1" class="progress-segment"></div>
-            <div id="progress-revision2" class="progress-segment"></div>
-            <div id="progress-pyq" class="progress-segment"></div>
-            <div id="progress-test" class="progress-segment"></div>
+            <div></div>
         </div>
         <table>
             <thead>
@@ -303,12 +495,7 @@
             <h2>Linear Algebra</h2>
         </div>
         <div class="progress-bar">
-            <div id="progress-theory" class="progress-segment"></div>
-            <div id="progress-practice" class="progress-segment"></div>
-            <div id="progress-revision1" class="progress-segment"></div>
-            <div id="progress-revision2" class="progress-segment"></div>
-            <div id="progress-pyq" class="progress-segment"></div>
-            <div id="progress-test" class="progress-segment"></div>
+            <div></div>
         </div>
         <table>
             <thead>
@@ -432,12 +619,7 @@
             <h2>Calculus and Optimization</h2>
         </div>
         <div class="progress-bar">
-            <div id="progress-theory" class="progress-segment"></div>
-            <div id="progress-practice" class="progress-segment"></div>
-            <div id="progress-revision1" class="progress-segment"></div>
-            <div id="progress-revision2" class="progress-segment"></div>
-            <div id="progress-pyq" class="progress-segment"></div>
-            <div id="progress-test" class="progress-segment"></div>
+            <div></div>
         </div>
         <table>
             <thead>
@@ -507,12 +689,7 @@
             <h2>Database Management and Warehousing</h2>
         </div>
         <div class="progress-bar">
-            <div id="progress-theory" class="progress-segment"></div>
-            <div id="progress-practice" class="progress-segment"></div>
-            <div id="progress-revision1" class="progress-segment"></div>
-            <div id="progress-revision2" class="progress-segment"></div>
-            <div id="progress-pyq" class="progress-segment"></div>
-            <div id="progress-test" class="progress-segment"></div>
+            <div></div>
         </div>
         <table>
             <thead>
@@ -636,12 +813,7 @@
             <h2>Machine Learning</h2>
         </div>
         <div class="progress-bar">
-            <div id="progress-theory" class="progress-segment"></div>
-            <div id="progress-practice" class="progress-segment"></div>
-            <div id="progress-revision1" class="progress-segment"></div>
-            <div id="progress-revision2" class="progress-segment"></div>
-            <div id="progress-pyq" class="progress-segment"></div>
-            <div id="progress-test" class="progress-segment"></div>
+            <div></div>
         </div>
         <table>
             <thead>
@@ -827,14 +999,9 @@
         <div class="topic-header">
             <h2>Artificial Intelligence (AI)</h2>
         </div>
-    <div class="progress-bar">
-        <div id="progress-theory" class="progress-segment"></div>
-        <div id="progress-practice" class="progress-segment"></div>
-        <div id="progress-revision1" class="progress-segment"></div>
-        <div id="progress-revision2" class="progress-segment"></div>
-        <div id="progress-pyq" class="progress-segment"></div>
-        <div id="progress-test" class="progress-segment"></div>
-    </div>
+        <div class="progress-bar">
+            <div></div>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -933,6 +1100,12 @@
         </table>
     </div>
 
+
+
+    
+
+
+
     <!-- Footer -->
     <div class="footer">
         <p>Created by <a href="#">usnaveen</a></p>
@@ -942,7 +1115,188 @@
     <div class="bottom-bar"></div>
 
     <!-- Firebase App (using ES Modules) -->
-    <script type="module" src="script.js"></script>
-    
+    <!-- Firebase App (using ES Modules) -->
+    <script type="module">
+        // Import the Firebase SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+        // Your Firebase configuration
+          const firebaseConfig = {
+            apiKey: "AIzaSyAowbD3T4k0PKfM3TqzZG-GYuSU-WLv18s",
+            authDomain: "gatedatracker.firebaseapp.com",
+            projectId: "gatedatracker",
+            storageBucket: "gatedatracker.appspot.com",
+            messagingSenderId: "219844748899",
+            appId: "1:219844748899:web:338d84350d9951b8ff7a56",
+            measurementId: "G-GK2VRXJTQG"
+          };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Listen to auth state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                document.getElementById("user-info").innerText = `Hello, ${user.displayName}`;
+                document.getElementById("sign-in-button").style.display = "none";
+                document.getElementById("sign-out-button").style.display = "block";
+                loadCheckboxState(user.uid); // Load the user's progress
+            } else {
+                // No user is signed in
+                document.getElementById("user-info").innerText = "Please sign in";
+                document.getElementById("sign-in-button").style.display = "block";
+                document.getElementById("sign-out-button").style.display = "none";
+            }
+        });
+
+        // Save checkbox state to Firestore
+        async function saveCheckboxState(userId) {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const state = {};
+
+            checkboxes.forEach((checkbox) => {
+                state[checkbox.id] = checkbox.checked;
+            });
+
+            // Save the state to Firestore for the specific user
+            try {
+                await setDoc(doc(db, "progress", userId), state);
+                console.log("Progress successfully saved to Firestore!");
+            } catch (error) {
+                console.error("Error saving progress: ", error);
+            }
+        }
+
+        // Load checkbox state from Firestore
+        async function loadCheckboxState(userId) {
+            try {
+                const docSnap = await getDoc(doc(db, "progress", userId));
+                if (docSnap.exists()) {
+                    const state = docSnap.data();
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach((checkbox) => {
+                        checkbox.checked = state[checkbox.id] || false;
+                    });
+        
+                    // Update progress for each topic after loading the state
+                    document.querySelectorAll('.topic').forEach(topic => {
+                        updateProgress(topic); // Recalculate progress for each topic
+                    });
+        
+                    // **Add this line to recalculate overall progress**
+                    calculateOverallProgress(); // Recalculate the overall progress based on the loaded state
+                } else {
+                    console.log("No saved progress found.");
+                }
+            } catch (error) {
+                console.error("Error loading progress: ", error);
+            }
+        }
+
+        // Update progress bar based on checkboxes
+        function updateProgress(topicElement) {
+            const checkboxes = topicElement.querySelectorAll('input[type="checkbox"]');
+            const progressBar = topicElement.querySelector('.progress-bar div');
+            const total = checkboxes.length;
+            const checked = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+            const progressPercentage = (checked / total) * 100;
+            progressBar.style.width = progressPercentage + '%';
+        }
+
+        // Initialize progress and checkbox states on page load
+        function initialize() {
+            // Wait for auth state to change before loading progress
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    loadCheckboxState(user.uid); // Load user-specific progress data
+                }
+            });
+
+            document.querySelectorAll('.topic').forEach(topic => {
+                const checkboxes = topic.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
+                        onAuthStateChanged(auth, (user) => {
+                            if (user) {
+                                saveCheckboxState(user.uid); // Save progress for the signed-in user
+                                updateProgress(topic);
+                            }
+                        });
+                    });
+                });
+            });
+        }
+
+        // Call initialize function when page loads
+        window.onload = initialize;
+
+        // Attach event listeners to buttons once the DOM is loaded
+        document.getElementById("sign-in-button").addEventListener("click", googleSignIn);
+        document.getElementById("sign-out-button").addEventListener("click", googleSignOut);
+        
+        // Google Sign-In function
+        function googleSignIn() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("User signed in: ", user.displayName);
+                    loadCheckboxState(user.uid); // Load user-specific data
+                })
+                .catch((error) => {
+                    console.error("Error during sign-in: ", error);
+                });
+        }
+        
+        // Sign Out function
+        function googleSignOut() {
+            signOut(auth).then(() => {
+                console.log("User signed out.");
+                location.reload(); // Reload the page after sign-out
+            }).catch((error) => {
+                console.error("Error during sign-out: ", error);
+            });
+        }
+
+        // Function to calculate overall progress based on all checkboxes
+        function calculateOverallProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const totalCheckboxes = checkboxes.length;
+            const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+            const overallProgressPercentage = (checkedCheckboxes / totalCheckboxes) * 100;
+        
+            // Update the progress bar and percentage text
+            const progressBar = document.getElementById('overall-progress-bar');
+            progressBar.style.width = overallProgressPercentage + '%';
+        
+            const progressPercentageText = document.getElementById('overall-progress-percentage');
+            progressPercentageText.innerText = Math.round(overallProgressPercentage) + '%';
+        }
+        
+        // Function to initialize overall progress tracking on page load
+        function initializeOverallProgressTracking() {
+            // Call the function to calculate and display initial overall progress
+            calculateOverallProgress();
+        
+            // Add event listeners to all checkboxes to update progress when clicked
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', calculateOverallProgress);
+            });
+        }
+        
+        // Call the initialize function on page load
+        window.onload = function() {
+            initialize();
+            initializeOverallProgressTracking();
+        };
+
+    </script>
+
 </body>
 </html>
