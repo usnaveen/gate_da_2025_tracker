@@ -144,7 +144,6 @@
         </div>
     </div>
 
-
     <!-- Programming, Data Structures and Algorithms -->
     <div class="topic" data-topic="PDSA">
         <div class="topic-header">
@@ -232,6 +231,7 @@
             </tbody>
         </table>
     </div>
+    
 
     <!-- Footer -->
     <div class="footer">
@@ -242,7 +242,6 @@
     <div class="bottom-bar"></div>
 
     <!-- Firebase App (using ES Modules) -->
-    <!-- Firebase App (using ES Modules) -->
     <script type="module">
         // Import the Firebase SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
@@ -251,13 +250,13 @@
 
         // Your Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyAowbD3T4k0PKfM3TqzZG-GYuSU-WLv18s",
-          authDomain: "gatedatracker.firebaseapp.com",
-          projectId: "gatedatracker",
-          storageBucket: "gatedatracker.appspot.com",
-          messagingSenderId: "219844748899",
-          appId: "1:219844748899:web:6652727f0bc20f07ff7a56",
-          measurementId: "G-BCF3RQPHET"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
         };
 
         // Initialize Firebase
@@ -266,11 +265,39 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
+        // Google Sign-In function
+        function googleSignIn() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("User signed in: ", user.displayName);
+                    loadCheckboxState(user.uid); // Load user-specific data
+                    document.getElementById("user-info").innerText = `Hello, ${user.displayName}`;
+                    document.getElementById("profile-pic").src = user.photoURL;
+                    document.getElementById("profile-pic").style.display = "block";
+                })
+                .catch((error) => {
+                    console.error("Error during sign-in: ", error);
+                });
+        }
+
+        // Sign Out function
+        function googleSignOut() {
+            signOut(auth).then(() => {
+                console.log("User signed out.");
+                location.reload(); // Reload the page after sign-out
+            }).catch((error) => {
+                console.error("Error during sign-out: ", error);
+            });
+        }
+
         // Listen to auth state changes
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // User is signed in
                 document.getElementById("user-info").innerText = `Hello, ${user.displayName}`;
+                document.getElementById("profile-pic").src = user.photoURL;
+                document.getElementById("profile-pic").style.display = "block";
                 document.getElementById("sign-in-button").style.display = "none";
                 document.getElementById("sign-out-button").style.display = "block";
                 loadCheckboxState(user.uid); // Load the user's progress
@@ -279,6 +306,7 @@
                 document.getElementById("user-info").innerText = "Please sign in";
                 document.getElementById("sign-in-button").style.display = "block";
                 document.getElementById("sign-out-button").style.display = "none";
+                document.getElementById("profile-pic").style.display = "none";
             }
         });
 
@@ -359,33 +387,6 @@
 
         // Call initialize function when page loads
         window.onload = initialize;
-
-        // Attach event listeners to buttons once the DOM is loaded
-        document.getElementById("sign-in-button").addEventListener("click", googleSignIn);
-        document.getElementById("sign-out-button").addEventListener("click", googleSignOut);
-        
-        // Google Sign-In function
-        function googleSignIn() {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    const user = result.user;
-                    console.log("User signed in: ", user.displayName);
-                    loadCheckboxState(user.uid); // Load user-specific data
-                })
-                .catch((error) => {
-                    console.error("Error during sign-in: ", error);
-                });
-        }
-        
-        // Sign Out function
-        function googleSignOut() {
-            signOut(auth).then(() => {
-                console.log("User signed out.");
-                location.reload(); // Reload the page after sign-out
-            }).catch((error) => {
-                console.error("Error during sign-out: ", error);
-            });
-        }
     </script>
 
 </body>
