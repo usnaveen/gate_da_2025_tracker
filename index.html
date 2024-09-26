@@ -264,6 +264,11 @@
                     checkboxes.forEach((checkbox) => {
                         checkbox.checked = state[checkbox.id] || false;
                     });
+        
+                    // Update progress for each topic after loading the state
+                    document.querySelectorAll('.topic').forEach(topic => {
+                        updateProgress(topic); // Recalculate progress for each topic
+                    });
                 } else {
                     console.log("No saved progress found.");
                 }
@@ -271,6 +276,7 @@
                 console.error("Error loading progress: ", error);
             }
         }
+
 
         // Update progress bar based on checkboxes
         function updateProgress(topicElement) {
