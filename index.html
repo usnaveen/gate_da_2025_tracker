@@ -247,29 +247,6 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // Google Sign-In function
-        function googleSignIn() {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    const user = result.user;
-                    console.log("User signed in: ", user.displayName);
-                    loadCheckboxState(user.uid); // Load user-specific data
-                })
-                .catch((error) => {
-                    console.error("Error during sign-in: ", error);
-                });
-        }
-
-        // Sign Out function
-        function googleSignOut() {
-            signOut(auth).then(() => {
-                console.log("User signed out.");
-                location.reload(); // Reload the page after sign-out
-            }).catch((error) => {
-                console.error("Error during sign-out: ", error);
-            });
-        }
-
         // Listen to auth state changes
         onAuthStateChanged(auth, (user) => {
             if (user) {
