@@ -117,6 +117,13 @@
 
     <h1>GATE DA 2025 Progress Tracker</h1>
 
+      <!-- Google Sign-In/Sign-Out buttons and User Info -->
+    <div style="text-align: center; margin-top: 20px;">
+        <div id="user-info" style="font-size: 18px;">Please sign in</div>
+        <button id="sign-in-button" onclick="googleSignIn()" style="margin: 10px; padding: 10px 20px; font-size: 16px;">Sign in with Google</button>
+        <button id="sign-out-button" onclick="googleSignOut()" style="display: none; margin: 10px; padding: 10px 20px; font-size: 16px;">Sign Out</button>
+    </div>
+
     <!-- Programming, Data Structures and Algorithms -->
     <div class="topic" data-topic="PDSA">
         <div class="topic-header">
@@ -214,30 +221,71 @@
     <div class="bottom-bar"></div>
 
     <!-- Firebase App (using ES Modules) -->
+    <!-- Firebase App (using ES Modules) -->
     <script type="module">
         // Import the Firebase SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
-        // Your web app's Firebase configuration
+        // Your Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyAowbD3T4k0PKfM3TqzZG-GYuSU-WLv18s",
-            authDomain: "gatedatracker.firebaseapp.com",
-            projectId: "gatedatracker",
-            storageBucket: "gatedatracker.appspot.com",
-            messagingSenderId: "219844748899",
-            appId: "1:219844748899:web:6652727f0bc20f07ff7a56",
-            measurementId: "G-BCF3RQPHET"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
         };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
-        const userId = 'user123';  // You can change this dynamically for different users
+        // Google Sign-In function
+        function googleSignIn() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("User signed in: ", user.displayName);
+                    loadCheckboxState(user.uid); // Load user-specific data
+                })
+                .catch((error) => {
+                    console.error("Error during sign-in: ", error);
+                });
+        }
+
+        // Sign Out function
+        function googleSignOut() {
+            signOut(auth).then(() => {
+                console.log("User signed out.");
+                location.reload(); // Reload the page after sign-out
+            }).catch((error) => {
+                console.error("Error during sign-out: ", error);
+            });
+        }
+
+        // Listen to auth state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                document.getElementById("user-info").innerText = `Hello, ${user.displayName}`;
+                document.getElementById("sign-in-button").style.display = "none";
+                document.getElementById("sign-out-button").style.display = "block";
+                loadCheckboxState(user.uid); // Load the user's progress
+            } else {
+                // No user is signed in
+                document.getElementById("user-info").innerText = "Please sign in";
+                document.getElementById("sign-in-button").style.display = "block";
+                document.getElementById("sign-out-button").style.display = "none";
+            }
+        });
 
         // Save checkbox state to Firestore
-        async function saveCheckboxState() {
+        async function saveCheckboxState(userId) {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             const state = {};
 
@@ -245,7 +293,7 @@
                 state[checkbox.id] = checkbox.checked;
             });
 
-            // Save the state to Firestore for the user
+            // Save the state to Firestore for the specific user
             try {
                 await setDoc(doc(db, "progress", userId), state);
                 console.log("Progress successfully saved to Firestore!");
@@ -255,7 +303,7 @@
         }
 
         // Load checkbox state from Firestore
-        async function loadCheckboxState() {
+        async function loadCheckboxState(userId) {
             try {
                 const docSnap = await getDoc(doc(db, "progress", userId));
                 if (docSnap.exists()) {
@@ -264,7 +312,7 @@
                     checkboxes.forEach((checkbox) => {
                         checkbox.checked = state[checkbox.id] || false;
                     });
-        
+
                     // Update progress for each topic after loading the state
                     document.querySelectorAll('.topic').forEach(topic => {
                         updateProgress(topic); // Recalculate progress for each topic
@@ -276,7 +324,6 @@
                 console.error("Error loading progress: ", error);
             }
         }
-
 
         // Update progress bar based on checkboxes
         function updateProgress(topicElement) {
@@ -290,21 +337,31 @@
 
         // Initialize progress and checkbox states on page load
         function initialize() {
-            loadCheckboxState();
+            // Wait for auth state to change before loading progress
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    loadCheckboxState(user.uid); // Load user-specific progress data
+                }
+            });
+
             document.querySelectorAll('.topic').forEach(topic => {
                 const checkboxes = topic.querySelectorAll('input[type="checkbox"]');
                 checkboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', () => {
-                        saveCheckboxState();
-                        updateProgress(topic);
+                        onAuthStateChanged(auth, (user) => {
+                            if (user) {
+                                saveCheckboxState(user.uid); // Save progress for the signed-in user
+                                updateProgress(topic);
+                            }
+                        });
                     });
                 });
-                updateProgress(topic);  // Initialize progress on page load
             });
         }
 
         // Call initialize function when page loads
         window.onload = initialize;
     </script>
+
 </body>
 </html>
