@@ -1183,11 +1183,14 @@
                     checkboxes.forEach((checkbox) => {
                         checkbox.checked = state[checkbox.id] || false;
                     });
-
+        
                     // Update progress for each topic after loading the state
                     document.querySelectorAll('.topic').forEach(topic => {
                         updateProgress(topic); // Recalculate progress for each topic
                     });
+        
+                    // **Add this line to recalculate overall progress**
+                    calculateOverallProgress(); // Recalculate the overall progress based on the loaded state
                 } else {
                     console.log("No saved progress found.");
                 }
