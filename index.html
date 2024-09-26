@@ -202,6 +202,49 @@
             color: #4CAF50; /* Same green color used in progress bars */
         }
 
+        :root {
+        --theory-color: #1ABC9C; /* Teal Blue */
+        --practice-color: #F1C40F; /* Mustard Yellow */
+        --revision1-color: #2ECC71; /* Cool Mint Green */
+        --revision2-color: #9B59B6; /* Soft Violet */
+        --pyq-color: #E74C3C; /* Coral Red */
+        --test-color: #34495E; /* Slate Gray */
+    }
+    
+        .progress-bar {
+        width: 100%;
+        height: 20px;
+        background-color: #f3f3f3;
+        border-radius: 10px;
+        display: flex;
+        overflow: hidden;
+        }
+    
+        .progress-segment {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        #progress-theory {
+            background-color: var(--theory-color);
+        }
+        #progress-practice {
+            background-color: var(--practice-color);
+        }
+        #progress-revision1 {
+            background-color: var(--revision1-color);
+        }
+        #progress-revision2 {
+            background-color: var(--revision2-color);
+        }
+        #progress-pyq {
+            background-color: var(--pyq-color);
+        }
+        #progress-test {
+            background-color: var(--test-color);
+        }
+
+
 
     </style>
 </head>
@@ -238,7 +281,12 @@
             <h2>PDSA</h2>
         </div>
         <div class="progress-bar">
-            <div></div>
+            <div id="progress-theory" class="progress-segment"></div>
+            <div id="progress-practice" class="progress-segment"></div>
+            <div id="progress-revision1" class="progress-segment"></div>
+            <div id="progress-revision2" class="progress-segment"></div>
+            <div id="progress-pyq" class="progress-segment"></div>
+            <div id="progress-test" class="progress-segment"></div>
         </div>
         <table>
             <thead>
@@ -326,7 +374,12 @@
             <h2>Probability and Statistics</h2>
         </div>
         <div class="progress-bar">
-            <div></div>
+            <div id="progress-theory" class="progress-segment"></div>
+            <div id="progress-practice" class="progress-segment"></div>
+            <div id="progress-revision1" class="progress-segment"></div>
+            <div id="progress-revision2" class="progress-segment"></div>
+            <div id="progress-pyq" class="progress-segment"></div>
+            <div id="progress-test" class="progress-segment"></div>
         </div>
         <table>
             <thead>
@@ -495,7 +548,12 @@
             <h2>Linear Algebra</h2>
         </div>
         <div class="progress-bar">
-            <div></div>
+            <div id="progress-theory" class="progress-segment"></div>
+            <div id="progress-practice" class="progress-segment"></div>
+            <div id="progress-revision1" class="progress-segment"></div>
+            <div id="progress-revision2" class="progress-segment"></div>
+            <div id="progress-pyq" class="progress-segment"></div>
+            <div id="progress-test" class="progress-segment"></div>
         </div>
         <table>
             <thead>
@@ -619,7 +677,12 @@
             <h2>Calculus and Optimization</h2>
         </div>
         <div class="progress-bar">
-            <div></div>
+            <div id="progress-theory" class="progress-segment"></div>
+            <div id="progress-practice" class="progress-segment"></div>
+            <div id="progress-revision1" class="progress-segment"></div>
+            <div id="progress-revision2" class="progress-segment"></div>
+            <div id="progress-pyq" class="progress-segment"></div>
+            <div id="progress-test" class="progress-segment"></div>
         </div>
         <table>
             <thead>
@@ -689,7 +752,12 @@
             <h2>Database Management and Warehousing</h2>
         </div>
         <div class="progress-bar">
-            <div></div>
+            <div id="progress-theory" class="progress-segment"></div>
+            <div id="progress-practice" class="progress-segment"></div>
+            <div id="progress-revision1" class="progress-segment"></div>
+            <div id="progress-revision2" class="progress-segment"></div>
+            <div id="progress-pyq" class="progress-segment"></div>
+            <div id="progress-test" class="progress-segment"></div>
         </div>
         <table>
             <thead>
@@ -813,7 +881,12 @@
             <h2>Machine Learning</h2>
         </div>
         <div class="progress-bar">
-            <div></div>
+            <div id="progress-theory" class="progress-segment"></div>
+            <div id="progress-practice" class="progress-segment"></div>
+            <div id="progress-revision1" class="progress-segment"></div>
+            <div id="progress-revision2" class="progress-segment"></div>
+            <div id="progress-pyq" class="progress-segment"></div>
+            <div id="progress-test" class="progress-segment"></div>
         </div>
         <table>
             <thead>
@@ -999,9 +1072,14 @@
         <div class="topic-header">
             <h2>Artificial Intelligence (AI)</h2>
         </div>
-        <div class="progress-bar">
-            <div></div>
-        </div>
+    <div class="progress-bar">
+        <div id="progress-theory" class="progress-segment"></div>
+        <div id="progress-practice" class="progress-segment"></div>
+        <div id="progress-revision1" class="progress-segment"></div>
+        <div id="progress-revision2" class="progress-segment"></div>
+        <div id="progress-pyq" class="progress-segment"></div>
+        <div id="progress-test" class="progress-segment"></div>
+    </div>
         <table>
             <thead>
                 <tr>
@@ -1208,6 +1286,37 @@
             const progressPercentage = (checked / total) * 100;
             progressBar.style.width = progressPercentage + '%';
         }
+
+        function updateSubjectProgress(topicElement) {
+            const totalCheckboxes = 6; // There are 6 checkboxes per row (Theory, Practice, etc.)
+            const theoryChecked = topicElement.querySelector('#theory-checkbox').checked;
+            const practiceChecked = topicElement.querySelector('#practice-checkbox').checked;
+            const revision1Checked = topicElement.querySelector('#revision1-checkbox').checked;
+            const revision2Checked = topicElement.querySelector('#revision2-checkbox').checked;
+            const pyqChecked = topicElement.querySelector('#pyq-checkbox').checked;
+            const testChecked = topicElement.querySelector('#test-checkbox').checked;
+        
+            // Calculate the width of each progress segment
+            const segmentWidth = 100 / totalCheckboxes;
+        
+            // Set the width of each progress segment
+            document.getElementById('progress-theory').style.width = theoryChecked ? `${segmentWidth}%` : '0';
+            document.getElementById('progress-practice').style.width = practiceChecked ? `${segmentWidth}%` : '0';
+            document.getElementById('progress-revision1').style.width = revision1Checked ? `${segmentWidth}%` : '0';
+            document.getElementById('progress-revision2').style.width = revision2Checked ? `${segmentWidth}%` : '0';
+            document.getElementById('progress-pyq').style.width = pyqChecked ? `${segmentWidth}%` : '0';
+            document.getElementById('progress-test').style.width = testChecked ? `${segmentWidth}%` : '0';
+        }
+        
+        // Add an event listener to all the checkboxes to trigger the progress update
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const topicElement = this.closest('.topic');
+                updateSubjectProgress(topicElement);
+            });
+        });
+
 
         // Initialize progress and checkbox states on page load
         function initialize() {
