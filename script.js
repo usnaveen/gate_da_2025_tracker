@@ -4,6 +4,7 @@ import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/fireb
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
 // Your Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAowbD3T4k0PKfM3TqzZG-GYuSU-WLv18s",
   authDomain: "gatedatracker.firebaseapp.com",
