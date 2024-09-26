@@ -159,6 +159,34 @@
             color: #4CAF50;
             text-decoration: none;
         }
+
+        /* Overall Progress Tracker */
+        .overall-progress {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            width: 80%; /* Fixed width for uniformity */
+            height: 20px;
+            background-color: #f3f3f3;
+            border-radius: 10px;
+            margin: 10px auto; /* Centered horizontally */
+            overflow: hidden;
+        }
+        
+        .progress-bar div {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        #overall-progress-percentage {
+            font-size: 16px;
+            color: #333;
+        }
+
     </style>
 </head>
 <body>
@@ -177,6 +205,16 @@
             <button id="sign-out-button" class="btn btn-secondary" style="display: none;">Sign Out</button>
         </div>
     </div>
+
+    <!-- Overall Progress Tracker -->
+    <div class="overall-progress">
+        <h3>Overall Progress</h3>
+        <div class="progress-bar">
+            <div id="overall-progress-bar"></div>
+        </div>
+        <p id="overall-progress-percentage">0%</p>
+    </div>
+
 
 
     <!-- Programming, Data Structures and Algorithms -->
@@ -1206,6 +1244,40 @@
                 console.error("Error during sign-out: ", error);
             });
         }
+
+        // Function to calculate overall progress based on all checkboxes
+        function calculateOverallProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const totalCheckboxes = checkboxes.length;
+            const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+            const overallProgressPercentage = (checkedCheckboxes / totalCheckboxes) * 100;
+        
+            // Update the progress bar and percentage text
+            const progressBar = document.getElementById('overall-progress-bar');
+            progressBar.style.width = overallProgressPercentage + '%';
+        
+            const progressPercentageText = document.getElementById('overall-progress-percentage');
+            progressPercentageText.innerText = Math.round(overallProgressPercentage) + '%';
+        }
+        
+        // Function to initialize overall progress tracking on page load
+        function initializeOverallProgressTracking() {
+            // Call the function to calculate and display initial overall progress
+            calculateOverallProgress();
+        
+            // Add event listeners to all checkboxes to update progress when clicked
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', calculateOverallProgress);
+            });
+        }
+        
+        // Call the initialize function on page load
+        window.onload = function() {
+            initialize();
+            initializeOverallProgressTracking();
+        };
+
     </script>
 
 </body>
